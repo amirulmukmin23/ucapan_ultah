@@ -129,55 +129,37 @@
     <div class="confetti-wrap" id="confettiWrap"></div>
   </div>
 
-  <!-- Suara -->
+  <!-- Suara confetti -->
   <audio id="confettiSound" src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3"></audio>
-  <audio id="surpriseSound" src="https://cdn.pixabay.com/download/audio/2021/09/03/audio_6f6fa0b7da.mp3?filename=pop-94319.mp3" preload="auto"></audio>
 
   <script>
-    function surprise(){
-      const wrap = document.getElementById('confettiWrap');
-      const cheer = document.getElementById('confettiSound');
-      const pop = document.getElementById('surpriseSound');
+    function random(min,max){return Math.random()*(max-min)+min}
+    function makeConfetti(){
+  const wrap=document.getElementById('confettiWrap');
+  const sound=document.getElementById('confettiSound');
+  
+  // mainkan suara hanya setelah ada interaksi (klik)
+  sound.currentTime=0;
+  sound.play().catch(()=>console.log("Audio belum diizinkan autoplay, klik tombol dulu!"));
 
-      // Flash putih
-      const flash = document.createElement('div');
-      flash.style.position = 'fixed';
-      flash.style.inset = 0;
-      flash.style.background = 'white';
-      flash.style.opacity = 0;
-      flash.style.zIndex = 9999;
-      flash.style.transition = 'opacity 0.2s ease';
-      document.body.appendChild(flash);
-      setTimeout(()=>flash.style.opacity=1,10);
-      setTimeout(()=>flash.style.opacity=0,200);
-      setTimeout(()=>flash.remove(),600);
+  const colors=['#ff6b6b','#ffd86b','#6bf3ff','#9b8cff','#8ef3a7'];
+  for(let i=0;i<36;i++){
+    const el=document.createElement('div');
+    el.className='confetti';
+    el.style.left=random(0,100)+'%';
+    el.style.background=colors[Math.floor(random(0,colors.length))];
+    el.style.width=random(6,12)+'px';
+    el.style.height=random(10,20)+'px';
+    el.style.top=random(-20,0)+'vh';
+    el.style.transform=`rotate(${random(0,360)}deg)`;
+    el.style.animationDuration=random(2.6,4.6)+'s';
+    wrap.appendChild(el);
+    setTimeout(()=>el.remove(),5200);
+  }
+}
 
-      // Mainkan suara pop + cheer
-      pop.currentTime=0;
-      pop.play().catch(()=>console.log("Klik diperlukan untuk audio"));
-      setTimeout(()=>{
-        cheer.currentTime=0;
-        cheer.play().catch(()=>console.log("Klik diperlukan untuk audio"));
-      }, 300);
 
-      // Confetti dari kiri & kanan
-      const colors=['#ff6b6b','#ffd86b','#6bf3ff','#9b8cff','#8ef3a7'];
-      for(let i=0;i<50;i++){
-        const el=document.createElement('div');
-        el.className='confetti';
-        el.style.background=colors[Math.floor(Math.random()*colors.length)];
-        el.style.width=Math.random()*8+6+'px';
-        el.style.height=Math.random()*14+10+'px';
-        el.style.top=(Math.random()*70)+'%';
-        el.style.left=(i%2===0?'-5%':'105%');
-        el.style.transform=`rotate(${Math.random()*360}deg)`;
-        el.style.animation=`fall ${Math.random()*2+2}s linear forwards`;
-        el.style.animationDelay=Math.random()*0.3+'s';
-        wrap.appendChild(el);
-        setTimeout(()=>el.remove(),4000);
-      }
-    }
-
+    function surprise(){makeConfetti();}
     function copyMessage(){
       const text=`Selamat ulang tahun! Semoga hari-harimu penuh kebahagiaan.`;
       navigator.clipboard?.writeText(text).then(()=>alert('Pesan disalin!'));
@@ -193,7 +175,7 @@
         flame.remove();
         document.getElementById('wish').style.opacity='1';
         document.getElementById('relightBtn').style.display='inline-block';
-        surprise(); // otomatis kasih confetti lagi
+        makeConfetti();
       },700);
     }
 
@@ -215,6 +197,7 @@
 
     document.getElementById('candle').addEventListener('click',blowOut);
 
+    // Deteksi suara (lebih sensitif di HP)
     if(navigator.mediaDevices?.getUserMedia){
       navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
         const audioCtx=new (window.AudioContext||window.webkitAudioContext)();
