@@ -2,61 +2,44 @@
 <html lang="id">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
   <title>Selamat Ulang Tahun!</title>
   <style>
     :root{
       --bg1:#ffecd2;
       --bg2:#fcb69f;
-      --card:#ffffff;
       --accent:#ff6b6b;
       --muted:#6b6b6b;
       font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     }
 
-    html,body{height:100%;}
+    html,body{height:100%;margin:0;}
     body{
-      margin:0;
       background: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.15), transparent 10%), 
                   linear-gradient(135deg,var(--bg1),var(--bg2));
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      display:flex;align-items:center;justify-content:center;
       padding:16px;
     }
 
     .card{
-      width:min(920px, 96vw);
+      width:100%;max-width:520px;
       background:linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.88));
-      border-radius:18px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.12);
-      overflow:hidden;
-      display:grid;
-      grid-template-columns: 1fr 360px;
-      position:relative;
+      border-radius:16px;
+      box-shadow:0 8px 24px rgba(0,0,0,0.12);
+      display:flex;flex-direction:column;
+      position:relative;overflow:hidden;
     }
 
-    .left{padding:36px 40px;display:flex;flex-direction:column;gap:20px;}
-
-    h1{margin:0;font-size:2rem;color:var(--accent);display:flex;gap:12px;align-items:center;}
-    .subtitle{margin:0;color:var(--muted);font-weight:600;font-size:1rem;}
-    p{margin:0;color:#333;line-height:1.5;font-size:1rem;}
-
-    .message{background:linear-gradient(90deg, rgba(255,245,240,0.9), rgba(255,250,248,0.9));
-      padding:18px;border-radius:12px;border:1px solid rgba(200,160,150,0.12);}
-    .cta{margin-top:6px;display:flex;gap:12px;flex-wrap:wrap;}
-    .btn{padding:10px 16px;border-radius:10px;border:0;cursor:pointer;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,0.08);}
-    .btn-primary{ background:var(--accent); color:white; }
-    .btn-ghost{ background:transparent; color:var(--accent); border:1px solid rgba(0,0,0,0.06); }
-
-    .right{padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
-    .cake{width:220px;height:220px;border-radius:999px;background: conic-gradient(from 210deg at 50% 50%, #ffd3b6, #ffd3b6 40%, #ffe7cf 40% 100%);
-      display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 8px 30px rgba(255,120,80,0.12) inset, 0 10px 30px rgba(0,0,0,0.08);}
-    .candle{width:12px;height:46px;background:#fff;border-radius:6px;position:absolute;top:22px;box-shadow:0 2px 6px rgba(0,0,0,0.12);}
+    .right{padding:18px;display:flex;flex-direction:column;align-items:center;gap:12px;}
+    .cake{width:160px;height:160px;border-radius:999px;background:conic-gradient(from 210deg at 50% 50%, #ffd3b6, #ffd3b6 40%, #ffe7cf 40% 100%);
+      display:flex;align-items:center;justify-content:center;position:relative;
+      box-shadow:0 6px 20px rgba(255,120,80,0.12) inset, 0 6px 20px rgba(0,0,0,0.08);}
+    .candle{width:10px;height:36px;background:#fff;border-radius:6px;position:absolute;top:16px;
+      box-shadow:0 2px 5px rgba(0,0,0,0.12);}
     .flame{
       width:12px;height:18px;background:linear-gradient(#ffd86b,#ff6b6b);
       border-radius:50% 50% 40% 40%;
-      position:absolute;top:6px;
+      position:absolute;top:4px;
       transform:translateY(-10px);
       filter:drop-shadow(0 6px 6px rgba(255,100,100,0.18));
       animation: flicker 1s infinite, sway 1.5s ease-in-out infinite;
@@ -72,115 +55,119 @@
       75%{transform:translateY(-10px) rotate(3deg);}
     }
 
-    .wish{font-weight:700;color:var(--accent);opacity:0;transition:opacity 0.8s ease;margin-top:8px;}
+    .wish{font-weight:700;color:var(--accent);opacity:0;transition:opacity 0.8s ease;margin-top:6px;}
+    .btn-reset{margin-top:8px;padding:6px 10px;border-radius:8px;background:#fff;border:1px solid rgba(0,0,0,0.1);font-size:0.85rem;color:#444;cursor:pointer;}
+
+    .left{padding:24px 20px;display:flex;flex-direction:column;gap:16px;text-align:center;}
+    h1{margin:0;font-size:1.6rem;color:var(--accent);}
+    .message{background:rgba(255,250,248,0.9);padding:14px;border-radius:10px;border:1px solid rgba(200,160,150,0.12);font-size:0.95rem;}
+    .cta{margin-top:6px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+    .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,0.08);font-size:0.95rem;}
+    .btn-primary{background:var(--accent);color:white;}
+    .btn-ghost{background:transparent;color:var(--accent);border:1px solid rgba(0,0,0,0.06);}
+    .footer{font-size:0.8rem;color:var(--muted);margin-top:6px;text-align:center;}
+
     .confetti-wrap{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
     .confetti{position:absolute;width:10px;height:18px;opacity:0.95;transform-origin:center;animation:fall linear forwards;}
     @keyframes fall{0%{transform:translateY(-30vh) rotate(0deg);opacity:1}100%{transform:translateY(120vh) rotate(540deg);opacity:0.9}}
-
-    /* Responsiveness */
-    @media (max-width:880px){
-      .card{grid-template-columns:1fr;padding:0;}
-      .right{order:-1;padding:20px;}
-      .cake{width:180px;height:180px;}
-      h1{font-size:1.8rem;}
-    }
-    @media (max-width:480px){
-      body{padding:8px;}
-      .left{padding:24px 20px;}
-      .cake{width:150px;height:150px;}
-      h1{font-size:1.5rem;}
-      p, .subtitle{font-size:0.95rem;}
-      .btn{padding:8px 12px;font-size:0.9rem;}
-    }
-
-    .footer{font-size:0.85rem;color:var(--muted);margin-top:6px;text-align:center;}
   </style>
 </head>
 <body>
   <div class="card">
+    <div class="right">
+      <div class="cake">
+        <div class="candle" id="candle"><div class="flame" id="flame"></div></div>
+      </div>
+      <div class="wish" id="wish">Harapanmu akan terkabul 🎇</div>
+      <button class="btn-reset" onclick="resetCandle()">Nyalakan Lilin 🔥</button>
+      <div style="font-weight:700;text-align:center;">Tiup lilinnya & buat harapanmu!</div>
+    </div>
     <div class="left">
       <h1>🎉 Selamat Ulang Tahun!</h1>
-      <p class="subtitle">Untuk temanku tercinta — hari ini spesial, dan kamu lebih spesial lagi.</p>
       <div class="message">
-        <p>Semoga setiap hari membawa lebih banyak tawa, kesempatan baru, dan mimpi yang jadi nyata. Terima kasih sudah jadi teman yang selalu ada — hari ini kita rayakan kamu!</p>
+        Semoga setiap hari membawa lebih banyak tawa, kesempatan baru, dan mimpi yang jadi nyata.
       </div>
       <div class="cta">
-        <button class="btn btn-primary" onclick="surprise()">Buka Kejutan 🎁</button>
+        <button class="btn btn-primary" onclick="makeConfetti()">Buka Kejutan 🎁</button>
         <button class="btn btn-ghost" onclick="copyMessage()">Salin Pesan</button>
       </div>
       <div class="footer">Klik atau tiup mikrofon untuk memadamkan lilin 🎂</div>
     </div>
-    <div class="right">
-      <div class="cake">
-        <div class="candle" id="candle">
-          <div class="flame" id="flame"></div>
-        </div>
-      </div>
-      <div class="wish" id="wish">Harapanmu akan terkabul 🎇</div>
-      <div style="font-weight:700;">Tiup lilinnya & buat harapanmu!</div>
-    </div>
     <div class="confetti-wrap" id="confettiWrap"></div>
   </div>
 
-  <script>
-    function random(min,max){return Math.random()*(max-min)+min}
-    function makeConfetti(){
-      const wrap=document.getElementById('confettiWrap');
-      const colors=['#ff6b6b','#ffd86b','#6bf3ff','#9b8cff','#8ef3a7'];
-      for(let i=0;i<36;i++){
-        const el=document.createElement('div');
-        el.className='confetti';
-        el.style.left=random(0,100)+'%';
-        el.style.background=colors[Math.floor(random(0,colors.length))];
-        el.style.width=random(6,12)+'px';
-        el.style.height=random(10,20)+'px';
-        el.style.top=random(-20,0)+'vh';
-        el.style.transform=`rotate(${random(0,360)}deg)`;
-        el.style.animationDuration=random(2.6,4.6)+'s';
-        wrap.appendChild(el);
-        setTimeout(()=>el.remove(),5200);
+<script>
+function random(min,max){return Math.random()*(max-min)+min}
+function makeConfetti(){
+  const wrap=document.getElementById('confettiWrap');
+  const colors=['#ff6b6b','#ffd86b','#6bf3ff','#9b8cff','#8ef3a7'];
+  for(let i=0;i<30;i++){
+    const el=document.createElement('div');
+    el.className='confetti';
+    el.style.left=random(0,100)+'%';
+    el.style.background=colors[Math.floor(random(0,colors.length))];
+    el.style.width=random(6,12)+'px';
+    el.style.height=random(10,20)+'px';
+    el.style.top=random(-20,0)+'vh';
+    el.style.transform=`rotate(${random(0,360)}deg)`;
+    el.style.animationDuration=random(2.2,4.2)+'s';
+    wrap.appendChild(el);
+    setTimeout(()=>el.remove(),5000);
+  }
+}
+
+function copyMessage(){
+  const text=`Selamat ulang tahun! Semoga hari-harimu penuh kebahagiaan.`;
+  navigator.clipboard?.writeText(text).then(()=>alert('Pesan disalin!'));
+}
+
+function blowOut(){
+  const flame=document.getElementById('flame');
+  if(!flame) return;
+  flame.style.transition='opacity 0.6s ease, transform 0.6s ease';
+  flame.style.opacity='0';
+  flame.style.transform='translateY(-5px) scale(0.6)';
+  setTimeout(()=>{
+    flame.remove();
+    document.getElementById('wish').style.opacity='1';
+    makeConfetti();
+  },700);
+}
+
+function resetCandle(){
+  if(!document.getElementById('flame')){
+    const candle=document.getElementById('candle');
+    const newFlame=document.createElement('div');
+    newFlame.className='flame';
+    newFlame.id='flame';
+    candle.appendChild(newFlame);
+    document.getElementById('wish').style.opacity='0';
+  }
+}
+
+document.getElementById('candle').addEventListener('click',blowOut);
+
+// DETEKSI SUARA: lebih responsif
+if(navigator.mediaDevices?.getUserMedia){
+  navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+    const audioCtx=new AudioContext();
+    const mic=audioCtx.createMediaStreamSource(stream);
+    const analyser=audioCtx.createAnalyser();
+    analyser.fftSize=512;
+    mic.connect(analyser);
+    const data=new Uint8Array(analyser.frequencyBinCount);
+
+    function detectBlow(){
+      analyser.getByteFrequencyData(data);
+      const volume=data.reduce((a,b)=>a+b,0)/data.length;
+      if(volume>40){ // lebih rendah supaya mudah padam di HP
+        blowOut();
       }
+      requestAnimationFrame(detectBlow);
     }
-
-    function surprise(){makeConfetti();}
-    function copyMessage(){
-      const text=`Selamat ulang tahun! Semoga hari-harimu penuh kebahagiaan.`;
-      navigator.clipboard?.writeText(text).then(()=>alert('Pesan disalin!'));
-    }
-
-    function blowOut(){
-      const flame=document.getElementById('flame');
-      if(!flame) return;
-      flame.style.transition='opacity 0.6s ease, transform 0.6s ease';
-      flame.style.opacity='0';
-      flame.style.transform='translateY(-5px) scale(0.6)';
-      setTimeout(()=>{
-        flame.remove();
-        document.getElementById('wish').style.opacity='1';
-        makeConfetti();
-      },700);
-    }
-
-    document.getElementById('candle').addEventListener('click',blowOut);
-
-    if(navigator.mediaDevices?.getUserMedia){
-      navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
-        const audioCtx=new AudioContext();
-        const mic=audioCtx.createMediaStreamSource(stream);
-        const analyser=audioCtx.createAnalyser();
-        analyser.fftSize=256;
-        mic.connect(analyser);
-        const data=new Uint8Array(analyser.frequencyBinCount);
-
-        function detectBlow(){
-          analyser.getByteFrequencyData(data);
-          const volume=data.reduce((a,b)=>a+b,0)/data.length;
-          if(volume>80){blowOut();}
-          requestAnimationFrame(detectBlow);
-        }
-        detectBlow();
-      }).catch(()=>console.log('Mikrofon tidak diizinkan'));
-    }
-  </script>
+    detectBlow();
+  }).catch(()=>console.log('Mikrofon tidak diizinkan'));
+}
+</script>
 </body>
 </html>
