@@ -2,12 +2,13 @@
 <html lang="id">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Selamat Ulang Tahun!</title>
   <style>
     :root{
       --bg1:#ffecd2;
       --bg2:#fcb69f;
+      --card:#ffffff;
       --accent:#ff6b6b;
       --muted:#6b6b6b;
       font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
@@ -17,157 +18,220 @@
     body{
       background: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.15), transparent 10%), 
                   linear-gradient(135deg,var(--bg1),var(--bg2));
-      display:flex;align-items:center;justify-content:center;
-      padding:16px;
+      display:flex;align-items:center;justify-content:center;padding:24px;
     }
 
     .card{
-      width:100%;max-width:520px;
+      width:min(920px, 96vw);
       background:linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.88));
-      border-radius:16px;
-      box-shadow:0 8px 24px rgba(0,0,0,0.12);
-      display:flex;flex-direction:column;
-      position:relative;overflow:hidden;
+      border-radius:18px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.12);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      position:relative;
     }
 
-    .right{padding:18px;display:flex;flex-direction:column;align-items:center;gap:12px;}
-    .cake{width:160px;height:160px;border-radius:999px;background:conic-gradient(from 210deg at 50% 50%, #ffd3b6, #ffd3b6 40%, #ffe7cf 40% 100%);
+    .left{padding:44px 48px;display:flex;flex-direction:column;gap:20px;align-items:flex-start;justify-content:center;}
+    h1{margin:0;font-size:2.1rem;color:var(--accent);display:flex;gap:12px;align-items:center;}
+    .subtitle{margin:0;color:var(--muted);font-weight:600;}
+    p{margin:0;color:#333;line-height:1.5;font-size:1rem;}
+    .message{background:linear-gradient(90deg, rgba(255,245,240,0.9), rgba(255,250,248,0.9));padding:18px;border-radius:12px;border:1px solid rgba(200,160,150,0.12);}
+    .cta{margin-top:6px;display:flex;gap:12px;flex-wrap:wrap;}
+    .btn{padding:10px 16px;border-radius:10px;border:0;cursor:pointer;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,0.08);}
+    .btn-primary{ background:var(--accent); color:white; }
+    .btn-ghost{ background:transparent; color:var(--accent); border:1px solid rgba(0,0,0,0.06); }
+    .right{padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
+
+    /* --- KUE & LILIN --- */
+    .cake{
+      width:240px;height:240px;border-radius:999px;
+      background: conic-gradient(from 210deg at 50% 50%, #ffd3b6, #ffd3b6 40%, #ffe7cf 40% 100%);
       display:flex;align-items:center;justify-content:center;position:relative;
-      box-shadow:0 6px 20px rgba(255,120,80,0.12) inset, 0 6px 20px rgba(0,0,0,0.08);}
-    .candle{width:10px;height:36px;background:#fff;border-radius:6px;position:absolute;top:16px;
-      box-shadow:0 2px 5px rgba(0,0,0,0.12);}
+      box-shadow:0 8px 30px rgba(255,120,80,0.12) inset, 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .candle{
+      width:20px;height:70px;background:#fff;border-radius:10px;
+      position:absolute;top:40px;left:50%;transform:translateX(-50%);
+      box-shadow:0 3px 8px rgba(0,0,0,0.15);
+      display:flex;align-items:flex-start;justify-content:center;
+    }
+
+    /* --- API (SVG) --- */
     .flame{
-      width:12px;height:18px;background:linear-gradient(#ffd86b,#ff6b6b);
-      border-radius:50% 50% 40% 40%;
-      position:absolute;top:4px;
-      transform:translateY(-10px);
-      filter:drop-shadow(0 6px 6px rgba(255,100,100,0.18));
-      animation: flicker 1s infinite, sway 1.5s ease-in-out infinite;
-    }
-    @keyframes flicker{
-      0%{transform:translateY(-10px) scale(1);opacity:1}
-      50%{transform:translateY(-11px) scale(0.97);opacity:0.9}
-      100%{transform:translateY(-10px) scale(1);opacity:1}
-    }
-    @keyframes sway{
-      0%,100%{transform:translateY(-10px) rotate(0deg);}
-      25%{transform:translateY(-10px) rotate(-3deg);}
-      75%{transform:translateY(-10px) rotate(3deg);}
+      width:36px;
+      height:54px;
+      position:absolute;
+      top:-42px;
+      left:50%;
+      transform:translateX(-50%);
+      filter:drop-shadow(0 0 10px rgba(255,140,50,0.6));
+      animation: sway 1.2s ease-in-out infinite, flicker 0.3s infinite alternate;
     }
 
-    .wish{font-weight:700;color:var(--accent);opacity:0;transition:opacity 0.8s ease;margin-top:6px;}
-    .btn-reset{margin-top:8px;padding:6px 10px;border-radius:8px;background:#fff;border:1px solid rgba(0,0,0,0.1);font-size:0.85rem;color:#444;cursor:pointer;}
+    @keyframes sway {
+      0%,100% { transform: translateX(-50%) rotate(0deg); }
+      25% { transform: translateX(-50%) rotate(-3deg); }
+      75% { transform: translateX(-50%) rotate(3deg); }
+    }
+    @keyframes flicker {
+      0% { opacity: 1; transform: translateX(-50%) scale(1); }
+      50% { opacity: 0.95; transform: translateX(-50%) scale(1.05); }
+      100% { opacity: 1; transform: translateX(-50%) scale(0.97); }
+    }
 
-    .left{padding:24px 20px;display:flex;flex-direction:column;gap:16px;text-align:center;}
-    h1{margin:0;font-size:1.6rem;color:var(--accent);}
-    .message{background:rgba(255,250,248,0.9);padding:14px;border-radius:10px;border:1px solid rgba(200,160,150,0.12);font-size:0.95rem;}
-    .cta{margin-top:6px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
-    .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,0.08);font-size:0.95rem;}
-    .btn-primary{background:var(--accent);color:white;}
-    .btn-ghost{background:transparent;color:var(--accent);border:1px solid rgba(0,0,0,0.06);}
-    .footer{font-size:0.8rem;color:var(--muted);margin-top:6px;text-align:center;}
-
+    .wish{font-weight:700;color:var(--accent);opacity:0;transition:opacity 0.8s ease;margin-top:8px;}
     .confetti-wrap{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
     .confetti{position:absolute;width:10px;height:18px;opacity:0.95;transform-origin:center;animation:fall linear forwards;}
     @keyframes fall{0%{transform:translateY(-30vh) rotate(0deg);opacity:1}100%{transform:translateY(120vh) rotate(540deg);opacity:0.9}}
+
+    @media (max-width:880px){
+      .card{grid-template-columns:1fr;padding:18px;}
+      .right{order:-1;}
+      .cake{width:200px;height:200px;}
+      .candle{height:60px;}
+      .flame{width:32px;height:48px;top:-36px;}
+    }
+
+    .footer{font-size:0.85rem;color:var(--muted);margin-top:6px}
   </style>
 </head>
 <body>
   <div class="card">
-    <div class="right">
-      <div class="cake">
-        <div class="candle" id="candle"><div class="flame" id="flame"></div></div>
-      </div>
-      <div class="wish" id="wish">Harapanmu akan terkabul 🎇</div>
-      <button class="btn-reset" onclick="resetCandle()">Nyalakan Lilin 🔥</button>
-      <div style="font-weight:700;text-align:center;">Tiup lilinnya & buat harapanmu!</div>
-    </div>
     <div class="left">
       <h1>🎉 Selamat Ulang Tahun!</h1>
+      <p class="subtitle">Untuk temanku tercinta — hari ini spesial, dan kamu lebih spesial lagi.</p>
       <div class="message">
-        Semoga setiap hari membawa lebih banyak tawa, kesempatan baru, dan mimpi yang jadi nyata.
+        <p>Semoga setiap hari membawa lebih banyak tawa, kesempatan baru, dan mimpi yang jadi nyata. Terima kasih sudah jadi teman yang selalu ada — hari ini kita rayakan kamu!</p>
       </div>
       <div class="cta">
-        <button class="btn btn-primary" onclick="makeConfetti()">Buka Kejutan 🎁</button>
+        <button class="btn btn-primary" onclick="surprise()">Buka Kejutan 🎁</button>
         <button class="btn btn-ghost" onclick="copyMessage()">Salin Pesan</button>
+        <button class="btn btn-ghost" id="relightBtn" style="display:none;" onclick="relight()">Nyalakan Lilin 🔥</button>
       </div>
       <div class="footer">Klik atau tiup mikrofon untuk memadamkan lilin 🎂</div>
+    </div>
+    <div class="right">
+      <div class="cake">
+        <div class="candle" id="candle">
+          <!-- SVG API -->
+          <svg id="flame" class="flame" viewBox="0 0 64 64">
+            <path d="M32 2C28 14 20 20 20 32c0 8 5 16 12 20 7-4 12-12 12-20 0-12-8-18-12-30z" fill="#fff176"/>
+            <path d="M32 10C29 20 24 24 24 32c0 6 4 12 8 15 4-3 8-9 8-15 0-8-5-12-8-22z" fill="#ff9800"/>
+            <path d="M32 18c-2 6-4 8-4 12 0 3 2 6 4 7 2-1 4-4 4-7 0-4-2-6-4-12z" fill="#ff5722"/>
+          </svg>
+        </div>
+      </div>
+      <div class="wish" id="wish">Harapanmu akan terkabul 🎇</div>
+      <div style="font-weight:700;">Tiup lilinnya & buat harapanmu!</div>
     </div>
     <div class="confetti-wrap" id="confettiWrap"></div>
   </div>
 
-<script>
-function random(min,max){return Math.random()*(max-min)+min}
-function makeConfetti(){
-  const wrap=document.getElementById('confettiWrap');
-  const colors=['#ff6b6b','#ffd86b','#6bf3ff','#9b8cff','#8ef3a7'];
-  for(let i=0;i<30;i++){
-    const el=document.createElement('div');
-    el.className='confetti';
-    el.style.left=random(0,100)+'%';
-    el.style.background=colors[Math.floor(random(0,colors.length))];
-    el.style.width=random(6,12)+'px';
-    el.style.height=random(10,20)+'px';
-    el.style.top=random(-20,0)+'vh';
-    el.style.transform=`rotate(${random(0,360)}deg)`;
-    el.style.animationDuration=random(2.2,4.2)+'s';
-    wrap.appendChild(el);
-    setTimeout(()=>el.remove(),5000);
-  }
-}
+  <!-- Suara -->
+  <audio id="confettiSound" src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3"></audio>
+  <audio id="surpriseSound" src="https://cdn.pixabay.com/download/audio/2021/09/03/audio_6f6fa0b7da.mp3?filename=pop-94319.mp3" preload="auto"></audio>
 
-function copyMessage(){
-  const text=`Selamat ulang tahun! Semoga hari-harimu penuh kebahagiaan.`;
-  navigator.clipboard?.writeText(text).then(()=>alert('Pesan disalin!'));
-}
+  <script>
+    function surprise(){
+      const wrap = document.getElementById('confettiWrap');
+      const cheer = document.getElementById('confettiSound');
+      const pop = document.getElementById('surpriseSound');
 
-function blowOut(){
-  const flame=document.getElementById('flame');
-  if(!flame) return;
-  flame.style.transition='opacity 0.6s ease, transform 0.6s ease';
-  flame.style.opacity='0';
-  flame.style.transform='translateY(-5px) scale(0.6)';
-  setTimeout(()=>{
-    flame.remove();
-    document.getElementById('wish').style.opacity='1';
-    makeConfetti();
-  },700);
-}
+      // Flash putih
+      const flash = document.createElement('div');
+      flash.style.position = 'fixed';
+      flash.style.inset = 0;
+      flash.style.background = 'white';
+      flash.style.opacity = 0;
+      flash.style.zIndex = 9999;
+      flash.style.transition = 'opacity 0.2s ease';
+      document.body.appendChild(flash);
+      setTimeout(()=>flash.style.opacity=1,10);
+      setTimeout(()=>flash.style.opacity=0,200);
+      setTimeout(()=>flash.remove(),600);
 
-function resetCandle(){
-  if(!document.getElementById('flame')){
-    const candle=document.getElementById('candle');
-    const newFlame=document.createElement('div');
-    newFlame.className='flame';
-    newFlame.id='flame';
-    candle.appendChild(newFlame);
-    document.getElementById('wish').style.opacity='0';
-  }
-}
+      // Mainkan suara pop + cheer
+      pop.currentTime=0;
+      pop.play().catch(()=>console.log("Klik diperlukan untuk audio"));
+      setTimeout(()=>{
+        cheer.currentTime=0;
+        cheer.play().catch(()=>console.log("Klik diperlukan untuk audio"));
+      }, 300);
 
-document.getElementById('candle').addEventListener('click',blowOut);
-
-// DETEKSI SUARA: lebih responsif
-if(navigator.mediaDevices?.getUserMedia){
-  navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
-    const audioCtx=new AudioContext();
-    const mic=audioCtx.createMediaStreamSource(stream);
-    const analyser=audioCtx.createAnalyser();
-    analyser.fftSize=512;
-    mic.connect(analyser);
-    const data=new Uint8Array(analyser.frequencyBinCount);
-
-    function detectBlow(){
-      analyser.getByteFrequencyData(data);
-      const volume=data.reduce((a,b)=>a+b,0)/data.length;
-      if(volume>40){ // lebih rendah supaya mudah padam di HP
-        blowOut();
+      // Confetti dari kiri & kanan
+      const colors=['#ff6b6b','#ffd86b','#6bf3ff','#9b8cff','#8ef3a7'];
+      for(let i=0;i<50;i++){
+        const el=document.createElement('div');
+        el.className='confetti';
+        el.style.background=colors[Math.floor(Math.random()*colors.length)];
+        el.style.width=Math.random()*8+6+'px';
+        el.style.height=Math.random()*14+10+'px';
+        el.style.top=(Math.random()*70)+'%';
+        el.style.left=(i%2===0?'-5%':'105%');
+        el.style.transform=`rotate(${Math.random()*360}deg)`;
+        el.style.animation=`fall ${Math.random()*2+2}s linear forwards`;
+        el.style.animationDelay=Math.random()*0.3+'s';
+        wrap.appendChild(el);
+        setTimeout(()=>el.remove(),4000);
       }
-      requestAnimationFrame(detectBlow);
     }
-    detectBlow();
-  }).catch(()=>console.log('Mikrofon tidak diizinkan'));
-}
-</script>
+
+    function copyMessage(){
+      const text=`Selamat ulang tahun! Semoga hari-harimu penuh kebahagiaan.`;
+      navigator.clipboard?.writeText(text).then(()=>alert('Pesan disalin!'));
+    }
+
+    function blowOut(){
+      const flame=document.getElementById('flame');
+      if(!flame) return;
+      flame.style.transition='opacity 0.6s ease, transform 0.6s ease';
+      flame.style.opacity='0';
+      flame.style.transform='translateX(-50%) scale(0.6)';
+      setTimeout(()=>{
+        flame.remove();
+        document.getElementById('wish').style.opacity='1';
+        document.getElementById('relightBtn').style.display='inline-block';
+        surprise(); // otomatis kasih confetti lagi
+      },700);
+    }
+
+    function relight(){
+      const candle=document.getElementById('candle');
+      const newFlame=document.createElementNS("http://www.w3.org/2000/svg","svg");
+      newFlame.setAttribute("id","flame");
+      newFlame.setAttribute("class","flame");
+      newFlame.setAttribute("viewBox","0 0 64 64");
+      newFlame.innerHTML=`
+        <path d="M32 2C28 14 20 20 20 32c0 8 5 16 12 20 7-4 12-12 12-20 0-12-8-18-12-30z" fill="#fff176"/>
+        <path d="M32 10C29 20 24 24 24 32c0 6 4 12 8 15 4-3 8-9 8-15 0-8-5-12-8-22z" fill="#ff9800"/>
+        <path d="M32 18c-2 6-4 8-4 12 0 3 2 6 4 7 2-1 4-4 4-7 0-4-2-6-4-12z" fill="#ff5722"/>
+      `;
+      candle.appendChild(newFlame);
+      document.getElementById('wish').style.opacity='0';
+      document.getElementById('relightBtn').style.display='none';
+    }
+
+    document.getElementById('candle').addEventListener('click',blowOut);
+
+    if(navigator.mediaDevices?.getUserMedia){
+      navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+        const audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+        const mic=audioCtx.createMediaStreamSource(stream);
+        const analyser=audioCtx.createAnalyser();
+        analyser.fftSize=128;
+        mic.connect(analyser);
+        const data=new Uint8Array(analyser.frequencyBinCount);
+        function detectBlow(){
+          analyser.getByteFrequencyData(data);
+          const volume=data.reduce((a,b)=>a+b,0)/data.length;
+          if(volume>60){blowOut();}
+          requestAnimationFrame(detectBlow);
+        }
+        detectBlow();
+      }).catch(()=>console.log('Mikrofon tidak diizinkan'));
+    }
+  </script>
 </body>
 </html>
