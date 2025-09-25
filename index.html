@@ -37,7 +37,7 @@
     .subtitle{margin:0;color:var(--muted);font-weight:600;}
     p{margin:0;color:#333;line-height:1.5;font-size:1rem;}
     .message{background:linear-gradient(90deg, rgba(255,245,240,0.9), rgba(255,250,248,0.9));padding:18px;border-radius:12px;border:1px solid rgba(200,160,150,0.12);}
-    .cta{margin-top:6px;display:flex;gap:12px;flex-wrap:wrap;}
+    .cta{margin-top:6px;display:flex;gap:12px;}
     .btn{padding:10px 16px;border-radius:10px;border:0;cursor:pointer;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,0.08);}
     .btn-primary{ background:var(--accent); color:white; }
     .btn-ghost{ background:transparent; color:var(--accent); border:1px solid rgba(0,0,0,0.06); }
@@ -108,7 +108,6 @@
       <div class="cta">
         <button class="btn btn-primary" onclick="surprise()">Buka Kejutan 🎁</button>
         <button class="btn btn-ghost" onclick="copyMessage()">Salin Pesan</button>
-        <button class="btn btn-ghost" id="relightBtn" style="display:none;" onclick="relight()">Nyalakan Lilin 🔥</button>
       </div>
       <div class="footer">Klik atau tiup mikrofon untuk memadamkan lilin 🎂</div>
     </div>
@@ -129,35 +128,25 @@
     <div class="confetti-wrap" id="confettiWrap"></div>
   </div>
 
-  <!-- Suara confetti -->
-  <audio id="confettiSound" src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3"></audio>
-
   <script>
     function random(min,max){return Math.random()*(max-min)+min}
     function makeConfetti(){
-  const wrap=document.getElementById('confettiWrap');
-  const sound=document.getElementById('confettiSound');
-  
-  // mainkan suara hanya setelah ada interaksi (klik)
-  sound.currentTime=0;
-  sound.play().catch(()=>console.log("Audio belum diizinkan autoplay, klik tombol dulu!"));
-
-  const colors=['#ff6b6b','#ffd86b','#6bf3ff','#9b8cff','#8ef3a7'];
-  for(let i=0;i<36;i++){
-    const el=document.createElement('div');
-    el.className='confetti';
-    el.style.left=random(0,100)+'%';
-    el.style.background=colors[Math.floor(random(0,colors.length))];
-    el.style.width=random(6,12)+'px';
-    el.style.height=random(10,20)+'px';
-    el.style.top=random(-20,0)+'vh';
-    el.style.transform=`rotate(${random(0,360)}deg)`;
-    el.style.animationDuration=random(2.6,4.6)+'s';
-    wrap.appendChild(el);
-    setTimeout(()=>el.remove(),5200);
-  }
-}
-
+      const wrap=document.getElementById('confettiWrap');
+      const colors=['#ff6b6b','#ffd86b','#6bf3ff','#9b8cff','#8ef3a7'];
+      for(let i=0;i<36;i++){
+        const el=document.createElement('div');
+        el.className='confetti';
+        el.style.left=random(0,100)+'%';
+        el.style.background=colors[Math.floor(random(0,colors.length))];
+        el.style.width=random(6,12)+'px';
+        el.style.height=random(10,20)+'px';
+        el.style.top=random(-20,0)+'vh';
+        el.style.transform=`rotate(${random(0,360)}deg)`;
+        el.style.animationDuration=random(2.6,4.6)+'s';
+        wrap.appendChild(el);
+        setTimeout(()=>el.remove(),5200);
+      }
+    }
 
     function surprise(){makeConfetti();}
     function copyMessage(){
@@ -174,25 +163,8 @@
       setTimeout(()=>{
         flame.remove();
         document.getElementById('wish').style.opacity='1';
-        document.getElementById('relightBtn').style.display='inline-block';
         makeConfetti();
       },700);
-    }
-
-    function relight(){
-      const candle=document.getElementById('candle');
-      const newFlame=document.createElementNS("http://www.w3.org/2000/svg","svg");
-      newFlame.setAttribute("id","flame");
-      newFlame.setAttribute("class","flame");
-      newFlame.setAttribute("viewBox","0 0 64 64");
-      newFlame.innerHTML=`
-        <path d="M32 2C28 14 20 20 20 32c0 8 5 16 12 20 7-4 12-12 12-20 0-12-8-18-12-30z" fill="#fff176"/>
-        <path d="M32 10C29 20 24 24 24 32c0 6 4 12 8 15 4-3 8-9 8-15 0-8-5-12-8-22z" fill="#ff9800"/>
-        <path d="M32 18c-2 6-4 8-4 12 0 3 2 6 4 7 2-1 4-4 4-7 0-4-2-6-4-12z" fill="#ff5722"/>
-      `;
-      candle.appendChild(newFlame);
-      document.getElementById('wish').style.opacity='0';
-      document.getElementById('relightBtn').style.display='none';
     }
 
     document.getElementById('candle').addEventListener('click',blowOut);
