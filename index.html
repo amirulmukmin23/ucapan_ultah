@@ -16,12 +16,13 @@
 
     html,body{height:100%;}
     body{
-      margin:0; 
-      background: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.15), transparent 10%), linear-gradient(135deg,var(--bg1),var(--bg2));
-      display:flex; 
-      align-items:center; 
-      justify-content:center; 
-      padding:24px;
+      margin:0;
+      background: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.15), transparent 10%), 
+                  linear-gradient(135deg,var(--bg1),var(--bg2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
     }
 
     .card{
@@ -35,25 +36,22 @@
       position:relative;
     }
 
-    .left{padding:44px 48px;display:flex;flex-direction:column;gap:20px;align-items:flex-start;justify-content:center;}
+    .left{padding:36px 40px;display:flex;flex-direction:column;gap:20px;}
 
-    h1{margin:0;font-size:2.1rem;color:var(--accent);display:flex;gap:12px;align-items:center;}
-
-    .subtitle{margin:0;color:var(--muted);font-weight:600;}
-
+    h1{margin:0;font-size:2rem;color:var(--accent);display:flex;gap:12px;align-items:center;}
+    .subtitle{margin:0;color:var(--muted);font-weight:600;font-size:1rem;}
     p{margin:0;color:#333;line-height:1.5;font-size:1rem;}
 
-    .message{background:linear-gradient(90deg, rgba(255,245,240,0.9), rgba(255,250,248,0.9));padding:18px;border-radius:12px;border:1px solid rgba(200,160,150,0.12);}
-
-    .cta{margin-top:6px;display:flex;gap:12px;}
+    .message{background:linear-gradient(90deg, rgba(255,245,240,0.9), rgba(255,250,248,0.9));
+      padding:18px;border-radius:12px;border:1px solid rgba(200,160,150,0.12);}
+    .cta{margin-top:6px;display:flex;gap:12px;flex-wrap:wrap;}
     .btn{padding:10px 16px;border-radius:10px;border:0;cursor:pointer;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,0.08);}
     .btn-primary{ background:var(--accent); color:white; }
     .btn-ghost{ background:transparent; color:var(--accent); border:1px solid rgba(0,0,0,0.06); }
 
     .right{padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
-
-    .cake{width:220px;height:220px;border-radius:999px;background: conic-gradient(from 210deg at 50% 50%, #ffd3b6, #ffd3b6 40%, #ffe7cf 40% 100%);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 8px 30px rgba(255,120,80,0.12) inset, 0 10px 30px rgba(0,0,0,0.08);}
-
+    .cake{width:220px;height:220px;border-radius:999px;background: conic-gradient(from 210deg at 50% 50%, #ffd3b6, #ffd3b6 40%, #ffe7cf 40% 100%);
+      display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 8px 30px rgba(255,120,80,0.12) inset, 0 10px 30px rgba(0,0,0,0.08);}
     .candle{width:12px;height:46px;background:#fff;border-radius:6px;position:absolute;top:22px;box-shadow:0 2px 6px rgba(0,0,0,0.12);}
     .flame{
       width:12px;height:18px;background:linear-gradient(#ffd86b,#ff6b6b);
@@ -75,13 +73,27 @@
     }
 
     .wish{font-weight:700;color:var(--accent);opacity:0;transition:opacity 0.8s ease;margin-top:8px;}
-
     .confetti-wrap{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
     .confetti{position:absolute;width:10px;height:18px;opacity:0.95;transform-origin:center;animation:fall linear forwards;}
     @keyframes fall{0%{transform:translateY(-30vh) rotate(0deg);opacity:1}100%{transform:translateY(120vh) rotate(540deg);opacity:0.9}}
 
-    @media (max-width:880px){.card{grid-template-columns:1fr;padding:18px;}.right{order:-1;}}
-    .footer{font-size:0.85rem;color:var(--muted);margin-top:6px}
+    /* Responsiveness */
+    @media (max-width:880px){
+      .card{grid-template-columns:1fr;padding:0;}
+      .right{order:-1;padding:20px;}
+      .cake{width:180px;height:180px;}
+      h1{font-size:1.8rem;}
+    }
+    @media (max-width:480px){
+      body{padding:8px;}
+      .left{padding:24px 20px;}
+      .cake{width:150px;height:150px;}
+      h1{font-size:1.5rem;}
+      p, .subtitle{font-size:0.95rem;}
+      .btn{padding:8px 12px;font-size:0.9rem;}
+    }
+
+    .footer{font-size:0.85rem;color:var(--muted);margin-top:6px;text-align:center;}
   </style>
 </head>
 <body>
@@ -151,7 +163,6 @@
 
     document.getElementById('candle').addEventListener('click',blowOut);
 
-    // Deteksi suara (Web Audio API)
     if(navigator.mediaDevices?.getUserMedia){
       navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
         const audioCtx=new AudioContext();
