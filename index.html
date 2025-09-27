@@ -27,7 +27,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px 16px;
+      padding: 12px 16px;
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
@@ -92,7 +92,7 @@
     }
 
     .right {
-      padding: 30px 18px 20px;
+      padding: 22px 18px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -107,7 +107,7 @@
     .right::before {
       content: "🎊 🎉 🎂 🎁 ✨";
       position: absolute;
-      top: 12px;
+      top: 6px;
       left: 50%;
       transform: translateX(-50%);
       font-size: 1.2rem;
@@ -724,7 +724,7 @@
     /* Mobile Responsive Design */
     @media (max-width: 768px) {
       body {
-        padding: 16px 8px;
+        padding: 8px;
         min-height: 100vh;
       }
 
@@ -735,13 +735,13 @@
       }
 
       .right {
-        padding: 24px 12px 16px;
+        padding: 18px 12px 16px;
         gap: 14px;
       }
 
       .right::before {
         font-size: 1rem;
-        top: 8px;
+        top: 4px;
       }
 
       .cake {
@@ -807,11 +807,15 @@
       .floating-emoji {
         font-size: 1.5rem;
       }
+
+      /* Move floating emojis to top for mobile */
+      .bg-decoration:nth-child(3) { top: 3% !important; left: 10% !important; }
+      .bg-decoration:nth-child(4) { top: 6% !important; right: 12% !important; }
     }
 
     @media (max-width: 480px) {
       body {
-        padding: 12px 8px;
+        padding: 8px;
       }
 
       .card {
@@ -819,12 +823,12 @@
       }
 
       .right {
-        padding: 20px 8px 12px;
+        padding: 16px 8px 12px;
         border-radius: 16px 16px 0 0;
       }
 
       .right::before {
-        top: 6px;
+        top: 2px;
         font-size: 0.9rem;
       }
 
@@ -883,19 +887,23 @@
         font-size: 1.5rem;
         top: 8%;
       }
+
+      /* More floating emojis moved to top for small mobile */
+      .bg-decoration:nth-child(5) { top: 2% !important; left: 3% !important; }
+      .bg-decoration:nth-child(8) { top: 4% !important; left: 40% !important; }
     }
   </style>
 </head>
 <body>
   <!-- Floating Background Decorations -->
-  <div class="bg-decoration floating-emoji" style="top: 10%; left: 5%;">🎈</div>
-  <div class="bg-decoration floating-emoji" style="top: 20%; right: 8%;">🎊</div>
-  <div class="bg-decoration floating-emoji" style="top: 70%; left: 10%;">🎂</div>
-  <div class="bg-decoration floating-emoji" style="top: 60%; right: 12%;">🎁</div>
-  <div class="bg-decoration floating-emoji" style="top: 30%; left: 3%;">🎉</div>
-  <div class="bg-decoration floating-emoji" style="top: 80%; right: 5%;">✨</div>
-  <div class="bg-decoration floating-emoji" style="top: 45%; left: 8%;">🌟</div>
-  <div class="bg-decoration floating-emoji" style="top: 15%; right: 15%;">💖</div>
+  <div class="bg-decoration floating-emoji" style="top: 8%; left: 5%;">🎈</div>
+  <div class="bg-decoration floating-emoji" style="top: 5%; right: 8%;">🎊</div>
+  <div class="bg-decoration floating-emoji" style="top: 75%; left: 10%;">🎂</div>
+  <div class="bg-decoration floating-emoji" style="top: 70%; right: 12%;">🎁</div>
+  <div class="bg-decoration floating-emoji" style="top: 15%; left: 3%;">🎉</div>
+  <div class="bg-decoration floating-emoji" style="top: 85%; right: 5%;">✨</div>
+  <div class="bg-decoration floating-emoji" style="top: 25%; left: 8%;">🌟</div>
+  <div class="bg-decoration floating-emoji" style="top: 10%; right: 15%;">💖</div>
 
   <div class="card">
     <div class="right">
